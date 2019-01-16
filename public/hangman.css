@@ -7,6 +7,7 @@ body {
     box-sizing: border-box;
     color : black;    
     text-align: center;
+
 }
 
 #MainContainer {
@@ -14,8 +15,8 @@ body {
     display: grid;
     grid-gap: 20px;
     grid-template-columns: 20% 79%;
-    grid-template-rows: 530px 530px;
-
+    grid-template-rows: 520px 520px;
+    height: 530px;
 }
 
     #AnimationArea {
@@ -82,14 +83,12 @@ body {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-
                     }
 
                             #WrongOptions span {
                                 color: black;
-                                font: 1.5em bold;
+                                font: 2em bold;
                                 font-family:  'ZCOOL KuaiLe', cursive;
-
                             }
 
                     #mydiv {
@@ -98,7 +97,6 @@ body {
                         justify-content: center;
                         width: 90%;
                         align-items: center;
-
                     }
 
                     #userInpDiv {
@@ -106,11 +104,9 @@ body {
                         justify-content: center;
                         width: 90%;
                         align-items: center;
-                        border: 2px solid red;
                         margin-bottom: 10px;
 
                     }
-
 
                             #userInpTag {
                                 width: 70%; height: 40px;
@@ -121,8 +117,6 @@ body {
                             }
 
                             
-                            
-
             #btnArea {
                 background-image: url('brick-wallpaper.jpg'); 
                 border-radius: 20px;
@@ -146,6 +140,39 @@ body {
                         /* box-shadow: none !important */
                     }
 
+                    @keyframes TopUserText {
+                        /* 0%   {color: red;}
+                        25%  {color: yellow;}
+                        50%  {color: blue;}
+                        100% {color: green;} */
+
+                        0%   {left: 100%;}
+                        100% {left: -1000px;}
+                      }
+
+#TopUser {
+    background-image: url('brick-wallpaper.jpg');
+    width: 99%;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 20px;
+    display: flex;
+    
+}
+#TopUserText{
+    text-align: left;
+    font: 1.5em bold;
+    -webkit-animation-name: TopUserText; 
+    -webkit-animation-duration: 4s; 
+    animation-name: TopUserText;
+    animation-duration: 20s;
+    position: relative;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-timing-function: linear;
+    font-family:  'ZCOOL KuaiLe', cursive;
+}
 
 
 
