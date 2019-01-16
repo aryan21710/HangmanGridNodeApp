@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="hangman.css">
+<meta name="viewport" content="initial-scale=0.5,user-scalable=no">
+
+   <script type="text/javascript">
+        let movieArr=`{{movieN}}`
+        movieArr=movieArr.split(',');
+    </script>
+    <script src='socket.io/socket.io.js'></script>
+    <script src='hangman_class.js'></script>
+
+</head>
+<body onload='hangman.animation()'>
+    <div id='MainContainer'>
+        <div id='AnimationArea'>
+                
+        </div>
+
+        <div id='PlayCont'>
+
+                <div id="PrintStatusCont">
+                        
+                </div>
+
+                <div id="ScoreCont">
+                    <div>SCOREBOARD</div> 
+                    <span></span>                
+                </div>
+
+                <div id="QuizArea">           
+                            <audio id="audio" autoplay>
+                                <source src="" type="audio/mpeg">
+                            </audio>
+            
+                            <div id='WrongOptions'>
+                                    
+                            </div>
+            
+                            <div id="mydiv">
+                                    
+                            </div>
+            
+                            <div id="userInpDiv">
+                                    
+                            </div>       
+                </div>
+
+                <div id="btnArea">
+                    <button onclick='hangman.start()' >START</button> 
+                </div>
+        </div>
+
+ 
+</div>
+
+ 
+ 
+  
+
+</body>
+</html>

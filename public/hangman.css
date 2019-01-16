@@ -1,0 +1,154 @@
+* {
+    box-sizing: border-box;
+    font-family:  'ZCOOL KuaiLe', cursive;
+}
+body {
+    background-image: url('brick-black-wallpaper.jpg');
+    box-sizing: border-box;
+    color : black;    
+    text-align: center;
+}
+
+#MainContainer {
+    margin: 20px 20px 20px 0px;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 20% 79%;
+    grid-template-rows: 530px 530px;
+
+}
+
+    #AnimationArea {
+        background-image: url('brick-wallpaper.jpg');
+        padding: 10px;
+        border-radius: 20px;
+        align-items: center;
+    }
+
+    #PlayCont {
+        display: grid;
+        grid-template-rows: 2.3fr 3.7fr 1fr;
+        grid-template-columns: 0.9fr 0.9fr;
+        grid-gap: 20px;
+
+    }
+
+
+            #PrintStatusCont {
+                background-image: url('brick-wallpaper.jpg');
+                border-radius: 20px;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #ScoreCont {
+                background-image: url('brick-wallpaper.jpg');
+                border-radius: 20px;
+                display: flex;
+                flex-direction: column;
+       
+            }
+
+                    #ScoreCont > div {
+                        margin-top: 30px;
+                        font-size: 1.5em;
+                        font-weight: bold;
+                        text-align: center;
+                    }
+
+
+                    #ScoreCont > span {
+                        margin-top: 10px;
+                        font-size: 1.5em;
+                        font-weight: bold;
+                        text-align: center;
+                        color: black;
+                    }
+
+            #QuizArea {
+                background-image: url('brick-wallpaper.jpg');
+                grid-column: 1/span 2;
+                display: grid;
+                grid-template-rows: 1fr 2fr 1fr;
+                align-items: center;
+                border-radius: 20px;
+      
+            }
+
+                    #WrongOptions {
+                        color: black;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                    }
+
+                            #WrongOptions span {
+                                color: black;
+                                font: 1.5em bold;
+                                font-family:  'ZCOOL KuaiLe', cursive;
+
+                            }
+
+                    #mydiv {
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        width: 90%;
+                        align-items: center;
+
+                    }
+
+                    #userInpDiv {
+                        display: flex;
+                        justify-content: center;
+                        width: 90%;
+                        align-items: center;
+                        border: 2px solid red;
+                        margin-bottom: 10px;
+
+                    }
+
+
+                            #userInpTag {
+                                width: 70%; height: 40px;
+                                margin-top: 20px; font-size: 1.5em;
+                                background-image: url('brick-black-wallpaper.jpg');  
+                                color: white;  
+                                text-align: center;
+                            }
+
+                            
+                            
+
+            #btnArea {
+                background-image: url('brick-wallpaper.jpg'); 
+                border-radius: 20px;
+                grid-column: 1/span 2;
+                justify-content: center;
+                align-items: center;
+                padding: 20px;
+            }
+
+                    #btnArea button {
+                        width : 200px;
+                        height : 40px;
+                        border-radius: 20px;
+                        font-size: 1.5em;
+                        background-image: url('brick-black-wallpaper.jpg');
+                        cursor: pointer;
+                        text-decoration: none;
+                        border : none;
+                        outline: none;
+                        color: white;
+                        /* box-shadow: none !important */
+                    }
+
+
+
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */

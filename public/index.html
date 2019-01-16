@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="hangman.css">
+<meta name="viewport" content="initial-scale=0.5,user-scalable=no">
+
+
+</head>
+<body>
+    <div id='MainContainer'>
+        <div id='AnimationArea'>
+                
+        </div>
+
+        <div id='PlayCont'>
+
+                <div id="PrintStatusCont">
+                        
+                </div>
+
+                <div id="ScoreCont">
+                    <div>SCOREBOARD</div> 
+                    <span></span>                
+                </div>
+
+                <div id="QuizArea">           
+                            <audio id="audio" autoplay>
+                                <source src="" type="audio/mpeg">
+                            </audio>
+            
+                            <div id='WrongOptions'>
+                                    
+                            </div>
+            
+                            <div id="mydiv">
+                                    
+                            </div>
+            
+                            <div id="userInpDiv">
+                                    
+                            </div>       
+                </div>
+
+                <div id="btnArea">
+                    <button onclick='clicked()' >START</button> 
+                </div>
+        </div>
+
+ 
+</div>
+<script src="socket.io/socket.io.js"></script>
+<script src='../js/hangman_class.js'></script>
+<script src="../js/index.js"></script>
+
+
+
+
+       
+       
+       
+</body>
+</html>
