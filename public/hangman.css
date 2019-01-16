@@ -172,6 +172,7 @@ body {
     animation-direction: normal;
     animation-timing-function: linear;
     font-family:  'ZCOOL KuaiLe', cursive;
+    white-space: nowrap;
 }
 
 
