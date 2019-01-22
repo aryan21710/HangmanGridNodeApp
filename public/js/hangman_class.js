@@ -233,7 +233,6 @@ class HangmanClass {
         // this.movieArr.forEach((v)=>{
         //     console.log(v+':'+v.trim().length);
         // })
-        this.movieName='FANNY AND ALEXANDER';
 
         console.log('movieName:-'+this.movieName+':'+this.movieName.length); 
         this.shapeArr=['Head','Body','LeftLeg','RightLeg','LeftHand','Kill'];
@@ -259,7 +258,7 @@ class HangmanClass {
                             result+=e.target.value;
                         }) 
                     dupmovieVar=HangmanClass.removeFoundLetter(dupmovieVar,e.target.value);
-                    console.log('rightOptionMsg1...:-'+ rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)]);
+                    console.log('rightOptionMsg1.:-'+ rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)]);
                     document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
                     document.querySelector('#PrintStatusCont div').innerHTML= rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)];
                     HangmanClass.soundEffects('right');
