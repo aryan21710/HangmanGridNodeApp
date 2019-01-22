@@ -1,14 +1,16 @@
 * {
     box-sizing: border-box;
     font-family:  'ZCOOL KuaiLe', cursive;
+
 }
 body {
     background-image: url('brick-black-wallpaper.jpg');
     box-sizing: border-box;
     color : black;    
     text-align: center;
-
 }
+
+
 
 #MainContainer {
     margin: 20px 20px 20px 0px;
@@ -40,15 +42,23 @@ body {
                 border-radius: 20px;
                 font-weight: bold;
                 display: flex;
-                align-items: center;
-                justify-content: center;
+                flex-direction: column;
             }
+
+
+                    #PrintStatusCont > div {
+                        margin-top: 30px;
+                        font-size: 1.5em;
+                        font-weight: bold;
+                        text-align: center;
+                    }
 
             #ScoreCont {
                 background-image: url('brick-wallpaper.jpg');
                 border-radius: 20px;
                 display: flex;
                 flex-direction: column;
+
        
             }
 
@@ -57,6 +67,7 @@ body {
                         font-size: 1.5em;
                         font-weight: bold;
                         text-align: center;
+
                     }
 
 
@@ -70,11 +81,11 @@ body {
 
             #QuizArea {
                 background-image: url('brick-wallpaper.jpg');
-                grid-column: 1/span 2;
                 display: grid;
+                grid-column: 1/span 2;
                 grid-template-rows: 1fr 2fr 1fr;
-                align-items: center;
                 border-radius: 20px;
+                justify-content: center;
       
             }
 
@@ -95,49 +106,69 @@ body {
                         display: flex;
                         flex-wrap: wrap;
                         justify-content: center;
-                        width: 90%;
+                        width: 100%;
                         align-items: center;
+
                     }
 
                     #userInpDiv {
                         display: flex;
                         justify-content: center;
-                        width: 90%;
+                        width: 100%;
                         align-items: center;
-                        margin-bottom: 10px;
+
 
                     }
 
                             #userInpTag {
-                                width: 70%; height: 40px;
-                                margin-top: 20px; font-size: 1.5em;
+                                width:80%; height: 40px;
+                                color : white;
+                                font-size: 1.5em;
                                 background-image: url('brick-black-wallpaper.jpg');  
-                                color: white;  
                                 text-align: center;
-                            }
 
+                            }
+                            #userInpTag::placeholder{color: white; display: inline;}  
+                            #userInpTag:focus::placeholder {
+                                color: grey;
+
+                            }
+                            input:-webkit-autofill,
+                            input:-webkit-autofill:hover,
+                            input:-webkit-autofill:focus,
+                            input:-webkit-autofill:active
+                                { 
+                                    -webkit-text-fill-color: white;
+                                    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+                                    -webkit-padding-start: 8px !important;
+                                }
                             
             #btnArea {
                 background-image: url('brick-wallpaper.jpg'); 
                 border-radius: 20px;
                 grid-column: 1/span 2;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
-                padding: 20px;
+                padding: 20px 0px 0px 0px;
+
             }
 
-                    #btnArea button {
+                    #userInpDiv button, #btnArea button {
                         width : 200px;
-                        height : 40px;
+                        height : 40px;       
+                        display: inline-block;
                         border-radius: 20px;
                         font-size: 1.5em;
                         background-image: url('brick-black-wallpaper.jpg');
                         cursor: pointer;
                         text-decoration: none;
-                        border : none;
                         outline: none;
-                        color: white;
+                        color: white;                 
                         /* box-shadow: none !important */
+                    }
+
+                    #userInpDiv button {
+                        padding: 0px;
                     }
 
                     @keyframes TopUserText {

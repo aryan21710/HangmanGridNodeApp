@@ -1,0 +1,157 @@
+
+
+/* #TopUser {
+    background-image: url('brick-wallpaper.jpg');
+    width: 99%;
+    border-radius: 20px;
+    margin-top: 10px;
+}
+
+        #TopUser > span {
+            padding: 5px;
+            font: 1.5em bold;
+            width: 100%;
+            border-radius: 20px;
+        }     */
+
+
+        <div id="QuizArea">           
+                <audio id="audio" autoplay="">
+                    <source src="" type="audio/mpeg">
+                </audio>
+
+                <div id="WrongOptions">
+                        
+                </div>
+
+                <div id="mydiv">
+                        
+                </div>
+
+                <div id="userInpDiv">
+                        
+                </div>       
+    </div>
+
+
+    <div id="welcomeMsg">
+            <p> THE HANGMAN CHALLENGE </p>      
+        </div>
+
+        <div id='movieType'>
+                <button>BOLLYWOOD</button> <button>HOLLYWOOD</button>   
+        </div>
+
+        <form id="usrNameDiv">
+            <label>
+                    ENTER YOUR NAME:- <input id='usrname' name='name'>
+                    <button>SUBMIT</button>
+            </label>
+        </form>
+
+     
+        #userInpDiv {
+            display: flex;
+            justify-content: center;
+            width: 90%;
+            align-items: center;
+            margin-bottom: 10px;
+            border: 1px solid red;
+
+
+        }
+
+                #userInpTag {
+                    width: 70%; height: 40px;
+                    margin-top: 20px; font-size: 1.5em;
+                    background-image: url('brick-black-wallpaper.jpg');  
+                    color: white;  
+                    text-align: center;
+                }
+
+
+                socket.on('disconnect',()=>{
+                    console.log(`"${username}" DISCONNECTED AT "${d1.toTimeString()} ${d1.toDateString()}" `);
+                    
+                    // Object.keys(userScrPair).indexOf(username) != -1 ? userScrPair[username]=latestScr : console.log(`${username} not Present in Database`);
+                    // ;
+            
+                    fs.readFile('public/userScrPair','utf8',(err,data)=>{
+                        let newdata=[];
+                        let userScrPair={}
+            
+                        if(data) {
+                            data=JSON.parse(data);
+                            console.log('data:-'+typeof(data)+':'+data.length+':'+JSON.stringify(data));
+                            data.forEach((v,ind)=>{
+                                console.log('newdata before writing:-'+JSON.stringify(newdata));
+                                // newdata.push(v);
+                                // console.log('newdata after writing:-'+JSON.stringify(newdata));
+            
+                               if(v) {
+                                //    console.log(typeof(v)+':'+JSON.stringify(v));
+                                    console.log('iterating for v :-'+JSON.stringify(v)+':'+Object.keys(v)+':'+username);
+                                    if (Object.keys(v).indexOf(username) !=-1) {
+                                        console.log(`${username} EXISTS ON SERVER AT INDEX ${ind} AND HIS LAST SCORE WAS ${v[username]}`)
+                                        console.log('user earlier score:-'+v[username]);
+                                        console.log('latestscor:-'+latestScr);
+                                        console.log('is v[username] > latestScr:-'+v[username] > latestScr);
+                                        console.log('newdata before splice1:-'+JSON.stringify(newdata));
+            
+                                        if (v[username] >= latestScr) {
+                                            latestScr=v[username];
+                                            
+                                        } else {
+                                            v[username]=latestScr;
+                                        }
+            
+                                        console.log('newdata before splice2:-'+JSON.stringify(newdata));
+                                        newdata.splice(ind,1);
+            
+                                        console.log('newdata after splice:-'+JSON.stringify(newdata));
+            
+                                        newdata.push(v);
+                                        console.log('newdata after push:-'+JSON.stringify(newdata));
+                                    } 
+            
+            
+                               }
+                             
+                            })
+                            userScrPair[username]=latestScr;
+                            newdata.push(userScrPair);
+                            console.log(`${username} SCORE BEFORE WRTING IS ${latestScr}`)
+            
+                            fs.writeFile('public/userScrPair',JSON.stringify(newdata),(err,data)=>{
+                                if (err) {
+                                    console.log('NOT ABLE TO WRITE THE USER SCORE INVENTORY IN THE FILE');
+                                } else {
+                                    console.log(`WRITING ${username} DATA TO NEW FILE ${JSON.stringify(newdata)}`)
+                                }
+                            })
+                        } else {
+                            console.log('FILE IS EMPTY');
+                            console.log(`${username} SCORE BEFORE WRTING IS ${latestScr}`)
+                            userScrPair[username]=latestScr;
+                            newdata.push(userScrPair);
+            
+                            fs.writeFile('public/userScrPair',JSON.stringify(newdata),(err,data)=>{
+                                if (err) {
+                                    console.log('NOT ABLE TO WRITE THE USER SCORE INVENTORY IN THE FILE');
+                                } else {
+                                    console.log(`WRITING ${username} DATA TO EXISTING FILE ${JSON.stringify(newdata)}`)
+                                    delete userScrPair[username];
+                                    latestScr=0;
+                                }
+                            })
+                        }
+                    })
+            
+                    
+            
+                    console.log('********************************************************************************');
+            
+                })
+            
+            })
+            

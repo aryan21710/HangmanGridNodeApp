@@ -8,6 +8,9 @@ const fs=require('fs');
 const publicPath=path.join(__dirname, '../public');
 const PORT=process.env.PORT||4000;
 
+const MongoClient=require('mongodb').MongoClient;
+
+
 // here we are not using app.render to render the index.html page
 // instead whatever html file is available in public dir will be
 // rendered automatically by defining below middleware.
@@ -20,47 +23,149 @@ const server=http.createServer(app);
 
 const io=socketIO(server);
 
+console.log('********************************************************************************');
 // There are list of inbuilt events which makes the web socket works one of them
 // is connection. It works as follows.  We get access to socket variable from
 // the client side. 
 io.on('connection',(socket)=>{
-    const d1=new Date();
+    let username='';
+    const movieType=''; 
     let latestScr=0;
-    console.log(`NEW USER IS CONNECTED ON ${d1.toTimeString()} ${d1.toDateString()}`);
+    const d1=new Date();
+    let topScorers=[];
 
-    socket.on('startBtnClicked',()=>{
-        var movieName=[];
-        fs.readFile('public/movielist.txt','utf8',(err,data)=>{        
-            if (data) {
-                movieName=data.split('\n');
-                console.log('SENDING SCR FROM SERVER TO CLIENT:-'+latestScr);
-                socket.emit('sendMovieList',{
-                    scr: latestScr,
-                    movieName: movieName,
-                });                   
-            }          
+
+    MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
+
+        if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
+        let db=client.db('HANGMAN');
+        console.log('COLLECTING STATS OF ALL RECORDS NOW:-');
+        db.collection('userScrPair').find({})
+        .toArray().then((docs)=>{
+            console.log(docs.length+':'+Array.isArray(docs));
+            console.log('ALL RECORDS:-'+JSON.stringify(docs));
+                topScorers=docs.map((v)=>{
+                    if(v.username!='' && v.latestScr > 0) {
+                        return String(v.username).toUpperCase() + ':' + String(v.latestScr)+ ' ';
+                    }
+                })
+                console.log('TOP SCORERS ARRAY AFTER ITERATING OVER ALL RECORDS:-'+topScorers.join(''));
+                socket.emit('topScorers',topScorers);
+            }).catch((err)=>{
+                console.log('NOT ABLE TO ITERATE OVER ALL THE RECORDS:-'+err);
+            })
+        })     
+
+
+
+
+
+
+  
+
+        socket.on('userName',(userName)=>{
+            console.log(`"${userName}" IS CONNECTED ON "${d1.toTimeString()} ${d1.toDateString()}"`);
+            username=userName;
+        })
+        
+        socket.on('movieType',(movieType)=>{
+            console.log(`"${username}" PLAYING "${movieType}" HANGMAN`)
+            socket.on('startBtnClicked',()=>{
+                var movieName=[];
+                // console.log('movieType:='+ movieType);
+                let filename=path.join('public',movieType);
+                // console.log('filename:-'+filename);
+                fs.readFile(filename,'utf8',(err,data)=>{        
+                    if (data) {
+                        movieName=data.split('\n');
+                        console.log(`INTIAL SCORE ON SERVER FOR "${username}" IS ${latestScr}`);
+                        socket.emit('sendMovieList',{
+                            scr: latestScr,
+                            movieName: movieName,
+                            username: username
+                        });                   
+                    }          
+                })
+
+            })
         })
 
-    })
+        socket.on('gameStatus',(scrObj)=>{
+            console.log(`"${username}" ${scrObj.scr}`);
+        })
 
-    socket.on('clToSvScr',(scr)=>{
-        console.log('LATEST SCORE ON SERVER SIDE:-'+scr);
-        latestScr=scr;
-    });
+
+
+        socket.on('clToSvScr',(scr)=>{
+            latestScr=scr;
+            console.log(`LATEST SCORE ON SERVER SIDE FOR "${username}" IS ${latestScr}`);
+
+
+    })
 
         
-    socket.on('userScore',(scrObj)=>{
-        console.log('USER SCORE:-'+scrObj.scr);
-    })
-    socket.on('disconnect',()=>{
-        console.log('DISCONNECTED FROM CLIENT');
+
+        socket.on('disconnect',()=>{
+            console.log(`"${username}" DISCONNECTED AT "${d1.toTimeString()} ${d1.toDateString()}" `);
+            MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
+
+                if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
+                let db=client.db('HANGMAN');
+
+                //#KEYWORDS:- [CHECK IF THE COLLECTION FIRST EXIST IN THE DB. IF NOT DB.CREATECOLLECTION]
+                db.listCollections().toArray(function(err, items){
+                    if (err) throw err;
+        
+                    console.log('items:-'+JSON.stringify(items)); 
+                    if (items.length == 0) {
+                        console.log("No collections in database");  
+                        db.createCollection('userScrPair',(err,results)=>{
+                            if (err) return console.log('CANT CREATE THE COLLECTION');
+                            console.log(' NEW COLLECTION CREATED')
+                        })
+                    }
+                }) 
+
+
+                console.log(`${username} HAS ${latestScr} SCORE`);
+                db.collection('userScrPair').find({name:username})
+                .toArray().then((documents)=>{
+                        console.log('DOCUMENT FOUND '+JSON.stringify(documents,null,4));
+                        console.log(`${username} RECORD ALREADY EXISTS WITH SCORE ${documents[0]['latestScr']}`);
+                        let l=documents[0]['latestScr']>latestScr ? documents[0]['latestScr'] : latestScr;
+                        console.log('l:-'+l);
+                        db.collection('userScrPair').findOneAndUpdate(
+                            { name: username}, { $set: { latestScr: l}} ,{returnOriginal: false}
+                            )
+                            .then((documents)=>{
+                                console.log('UPDATED DOCUMENT  '+JSON.stringify(documents,null,4));
+                            }).catch((err)=>{
+                                console.log(`${username} RECORDS NOT UPDATED WITH LATEST SCORE`);
+                            })
+                    }).catch((err)=>{
+                    console.log(`${username} RECORD DOES NOT EXIST. ADD NEW DOCUMENT`);
+                    db.collection('userScrPair').insertOne({
+                        name: username,
+                        username:username,
+                        latestScr: latestScr
+                    },function(err,results){
+                    if (err) throw err;
+                        console.log('DOCUMENT IS ADDED NOW');
+                       
+                    })
+                })   
+        })
+        console.log('********************************************************************************');
+
+
+
+
+            
+        
+
     })
 })
-
-
-
-
-
+      
 server.listen(PORT,()=>{
     console.log(`server started at PORT:- ${PORT}`);
 })

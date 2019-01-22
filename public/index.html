@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="hangman.css">
     <meta name="viewport" content="initial-scale=0.5,user-scalable=no">
 </head>
-<body>
+<body onload='enterNameAnimation()'>
     <div id='MainContainer'>
         <div id='AnimationArea'>
                 
@@ -14,41 +14,36 @@
         <div id='PlayCont'>
 
                 <div id="PrintStatusCont">
-                        
+                        <div></div>                         
                 </div>
 
                 <div id="ScoreCont">
-                    <div>SCOREBOARD</div> 
+                    <div >SCOREBOARD</div> 
                     <span></span>                
                 </div>
 
                 <div id="QuizArea">           
-                            <audio id="audio" autoplay>
-                                <source src="" type="audio/mpeg">
-                            </audio>
-            
-                            <div id='WrongOptions'>
-                                    
-                            </div>
-            
-                            <div id="mydiv">
-                                    
-                            </div>
-            
-                            <div id="userInpDiv">
-                                    
-                            </div>       
+
+                        <div id='btnArea' >
+                                <button  type="button" style="color: grey" class="movieType"  disabled name='bollywood' value='bollywood' onclick='movieType(event)'>BOLLYWOOD</button> <button  type="button" style="color: grey" class="movieType" disabled name='hollywood' value='hollywood' onclick='movieType(event)'>HOLLYWOOD</button> 
+  
+                        </div>
+
+                        <form id="userInpDiv"   style="margin-left: 40px">     
+                                    <input   style="color: white" id='userInpTag' name='username' placeholder='ENTER PLAYER NAME' oninput='userOptionsInit(event)'>
+                        </form>
+                                  
                 </div>
 
                 <div id="btnArea">
-                    <button onclick='clicked()' >START</button> 
+                    <button type="button" id='startBtn' disabled style="color: grey" onclick='clicked()' >START</button> 
                 </div>
         </div>
 
  
     </div>
     <div id="TopUser">
-        <p id="TopUserText">TOP SCORERS:-Sim-140, Aryan-130, Ryan-100, Naina-100, Shivam-90, Sid-80</p>
+        <p id="TopUserText"></p>
     </div>
   
 

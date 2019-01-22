@@ -72,79 +72,41 @@ class HangmanClass {
             document.getElementById('audio').src='Applause Light.mp3';    
         }
     }
-    
-     start() {
-
-        console.log('***************** NEW GAME ************************');
-        this.movieName=this.movieArr[Math.floor(Math.random()*this.movieArr.length)];
-        console.log('movieName:-'+this.movieName); 
-        this.shapeArr=['Head','Body','LeftLeg','RightLeg','LeftHand','Kill'];
-        console.log('this.shapeArr:-'+this.shapeArr);
-        console.log('moviename:-'+this.movieName);
-        document.getElementById('PrintStatusCont').innerHTML='';
-        document.getElementById('PrintStatusCont').style.fontSize='0.5em';
-
-        const AnimationArea=document.getElementById('AnimationArea');
-        AnimationArea.innerHTML='<canvas id="myCanvas" width= "280" height = "580"> </canvas>'
-        this.animation(null);
-        let result='';
-        let dupmovieVar=this.movieName;
-        let wrongOptionsId=HangmanClass.createTags(this.movieName);
-        let keyDwnFunc=((e)=>{
-                e.target.value=e.target.value.toUpperCase();
-                console.log('entered :-'+e.target.value);
-                let idName='#'+e.target.value;
-                if (dupmovieVar.includes(e.target.value)) {
-                        document.querySelectorAll(idName).forEach((v)=>{
-                            v.value=e.target.value;
-                            v.id='X'
-                            result+=e.target.value;
-                        }) 
-                    dupmovieVar=HangmanClass.removeFoundLetter(dupmovieVar,e.target.value);
-                    HangmanClass.soundEffects('right');
-
-                    } else {
-                        HangmanClass.wrngOption(e.target.value,wrongOptionsId);
-                        if(this.shapeArr.length>0) {
-                            this.shape=this.shapeArr.shift();
-                            this.animation(this.shape,this.shapeArr.length);  
-                            HangmanClass.soundEffects('wrong');
-                        } 
-                    }
-                    e.target.value='';               
-                    this.checkResult(result,this.movieName,this.shapeArr.length);
-            })
-            document.getElementById('userInpTag').addEventListener('input',keyDwnFunc);   
-    }
 
     static printWinMessage(status) { 
+        console.log('status inside printWinMessage:-'+status);
 
         // console.log('intial fontsize:-'+document.getElementById('PrintStatusCont').style.fontSize);
+        if (status=='win' || status=='lose') {
+            document.querySelector('#PrintStatusCont div').style.fontSize='0.3em';
+            this.printMessage=()=> {
+                console.log('printWinMessage is called now..');
+                let font=document.querySelector('#PrintStatusCont div').style.fontSize;
+                font=parseFloat(font.slice(0,font.length-2));
+                console.log('font size:-'+font);
+                console.log('status:-'+status);
+                if (font <= 1.5) {
+                    console.log('in if block of printWinMessage');
+                    font+=0.3;
+                    document.querySelector('#PrintStatusCont div').style.fontSize=font+'em';
+                    console.log('new font size:-'+document.querySelector('#PrintStatusCont div').style.fontSize);
+                    console.log('before:-'+document.querySelector('#PrintStatusCont div').innerHTML);
+                    status=='lose'? document.querySelector('#PrintStatusCont div').innerHTML="YOU LOST.." :
+                    document.querySelector('#PrintStatusCont div').innerHTML="YOU WON..";
+                    console.log('after:-'+document.querySelector('#PrintStatusCont div').innerHTML);
+                } else {
+                    console.log('in else block of printWinMessage');
+                    socket.emit('gameStatus',{
+                        scr: status,
+                    })          
+                    clearInterval(clearInt);
+                }
+             
 
-        this.printMessage=()=> {
-            console.log('printWinMessage is called now..');
-            let font=document.getElementById('PrintStatusCont').style.fontSize;
-            font=parseFloat(font.slice(0,font.length-2));
-            console.log('font size:-'+font);
-            console.log('status:-'+status);
-            if (font < 1.5) {
-                console.log('in if block of printWinMessage');
-                font+=0.3;
-                document.getElementById('PrintStatusCont').style.fontSize=font+'em';
-                console.log('new font size:-'+document.getElementById('PrintStatusCont').style.fontSize);
-                console.log('before:-'+document.getElementById('PrintStatusCont').innerHTML);
-                status=='lose'? document.getElementById('PrintStatusCont').innerHTML="YOU LOST.." :
-                document.getElementById('PrintStatusCont').innerHTML="YOU WON..";
-                console.log('after:-'+document.getElementById('PrintStatusCont').innerHTML);
-            } else {
-                console.log('in else block of printWinMessage');
-                socket.emit('userScore',{
-                    scr: status,
-                })          
-                clearInterval(clearInt);
             }
+            let clearInt=setInterval(this.printMessage,300);
+
         }
-        let clearInt=setInterval(this.printMessage,300);
     
     }
 
@@ -167,6 +129,8 @@ class HangmanClass {
                 HangmanClass.soundEffects('won');
                 document.getElementById('userInpTag').disabled=true;
                 this.score+=10;
+                socket.emit('clToSvScr',this.score);
+
                 
                 setTimeout(()=>{
                     document.querySelector('span').innerHTML=this.score;
@@ -179,14 +143,15 @@ class HangmanClass {
             HangmanClass.printWinMessage('lose');
            
             document.getElementById('userInpTag').disabled=true;   
-            this.score > 0 ? this.score-=10 : this.score=0;
+            // this.score > 0 ? this.score-=10 : this.score=0;
+            socket.emit('clToSvScr',this.score);
+
             setTimeout(()=>{
                 document.querySelector('span').innerHTML=this.score;
             }, 1000);
             console.log('CHANGED SCORE:-'+this.score);
            
         }
-        socket.emit('clToSvScr',this.score);
     }
 
     animation(shape=this.shape,whichShape=this.shapeArr.length) {
@@ -221,22 +186,22 @@ class HangmanClass {
                             console.log('BODY');
                 } else if (shape=='LeftLeg') {
                             ctx.moveTo(50,400);
-                            ctx.lineTo(30,500);
+                            ctx.lineTo(10,500);
                             ctx.stroke();
                             console.log('LEFT LEG');
                 } else if (shape=='RightLeg'){
                             ctx.moveTo(50,400);
-                            ctx.lineTo(80,500);
+                            ctx.lineTo(90,500);
                             ctx.stroke();
                             console.log('RIGHT LEG');
                 } else if (shape=='LeftHand') {
                             console.log('BOTH HANDS NOW');
-                            ctx.moveTo(50,330);
-                            ctx.lineTo(0,330);
+                            ctx.moveTo(50,350);
+                            ctx.lineTo(0,350);
                             ctx.stroke();
 
-                            ctx.moveTo(50,330);
-                            ctx.lineTo(100,330);
+                            ctx.moveTo(50,350);
+                            ctx.lineTo(100,350);
                             ctx.stroke();
                 } else if (shape=='Kill') {
                             console.log('KILLING NOW');
@@ -258,6 +223,68 @@ class HangmanClass {
                 console.log('myCanvas element inside AnimationArea missing');
         }
     }
+    
+     start() {
+
+        console.log('***************** NEW GAME ************************');
+      
+        this.movieName=this.movieArr[Math.floor(Math.random()*this.movieArr.length-1)].trim();
+        // // console.log('moviename:-'+this.movieName.split(''));
+        // this.movieArr.forEach((v)=>{
+        //     console.log(v+':'+v.trim().length);
+        // })
+        this.movieName='FANNY AND ALEXANDER';
+
+        console.log('movieName:-'+this.movieName+':'+this.movieName.length); 
+        this.shapeArr=['Head','Body','LeftLeg','RightLeg','LeftHand','Kill'];
+        console.log('this.shapeArr:-'+this.shapeArr);
+        console.log('moviename:-'+this.movieName);
+        document.querySelector('#PrintStatusCont div').innerHTML='';
+        document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
+        let rightOptionMsg=['KYA BAAT HAI','SUPER MACHA','KEEP GOING','YAK NUMBER','PHAAD','GAMER ON FIRE'];
+        const AnimationArea=document.getElementById('AnimationArea');
+        AnimationArea.innerHTML='<canvas id="myCanvas" width= "280" height = "580"> </canvas>'
+        this.animation(null);
+        let result='';
+        let dupmovieVar=this.movieName;
+        let wrongOptionsId=HangmanClass.createTags(this.movieName);
+        let keyDwnFunc=((e)=>{
+                e.target.value=e.target.value.toUpperCase();
+                console.log('entered :-'+e.target.value);
+                let idName='#'+e.target.value;
+                if (dupmovieVar.includes(e.target.value)) {
+                        document.querySelectorAll(idName).forEach((v)=>{
+                            v.value=e.target.value;
+                            v.id='9';
+                            result+=e.target.value;
+                        }) 
+                    dupmovieVar=HangmanClass.removeFoundLetter(dupmovieVar,e.target.value);
+                    console.log('rightOptionMsg1...:-'+ rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)]);
+                    document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
+                    document.querySelector('#PrintStatusCont div').innerHTML= rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)];
+                    HangmanClass.soundEffects('right');
+
+                    } else {
+                        HangmanClass.wrngOption(e.target.value,wrongOptionsId);
+                        document.querySelector('#PrintStatusCont div').innerHTML='';
+                        if(this.shapeArr.length>0) {
+                            this.shape=this.shapeArr.shift();
+                            this.animation(this.shape,this.shapeArr.length);  
+                            HangmanClass.soundEffects('wrong');
+                        } 
+                    }
+                    e.target.value='';               
+                    this.checkResult(result,this.movieName,this.shapeArr.length);
+            })
+            document.getElementById('userInpTag').addEventListener('input',keyDwnFunc);   
+    }
+
+  
+
+
 }
 
 // const hangman=new HangmanClass('XQ JNHG PRTYW');
+// const hangman=new HangmanClass('TAXI DRIVER');
+// const hangman=new HangmanClass('FANNY AND ALEXANDER');
+// // const hangman=new HangmanClass('INDIANA JONES AND THE LAST CRUSADE') --> UI breaking
