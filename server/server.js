@@ -35,7 +35,7 @@ io.on('connection',(socket)=>{
     let topScorers=[];
 
 
-    MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
+    MongoClient.connect('mongodb://aryan:aryan21710@ds211625.mlab.com:11625/heroku_lpl7zt8z',{useNewUrlParser: true},(err,client)=>{
 
         if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
         let db=client.db('HANGMAN');
@@ -107,7 +107,7 @@ io.on('connection',(socket)=>{
 
         socket.on('disconnect',()=>{
             console.log(`"${username}" DISCONNECTED AT "${d1.toTimeString()} ${d1.toDateString()}" `);
-            MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
+            MongoClient.connect('mongodb://aryan:aryan21710@ds211625.mlab.com:11625/heroku_lpl7zt8z',{useNewUrlParser: true},(err,client)=>{
 
                 if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
                 let db=client.db('HANGMAN');
