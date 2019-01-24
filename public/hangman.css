@@ -186,16 +186,18 @@ body {
     width: 99%;
     border-radius: 20px;
     margin-top: 10px;
-    padding: 5px;
+    height : 80px;
     border-radius: 20px;
     display: flex;
+    border: 1px solid red;
+    justify-content: center;
     
 }
 #TopUserText{
     text-align: left;
     font: 1.5em bold;
     -webkit-animation-name: TopUserText; 
-    -webkit-animation-duration: 4s; 
+    -webkit-animation-duration: 20s; 
     animation-name: TopUserText;
     animation-duration: 20s;
     position: relative;
