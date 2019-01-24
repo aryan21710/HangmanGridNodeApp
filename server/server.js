@@ -110,7 +110,7 @@ io.on('connection',(socket)=>{
             MongoClient.connect('mongodb://aryan:aryan21710@ds211625.mlab.com:11625/heroku_lpl7zt8z',{useNewUrlParser: true},(err,client)=>{
 
                 if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
-                let db=client.db('HANGMAN');
+                let db=client.db('heroku_lpl7zt8z');
 
                 //#KEYWORDS:- [CHECK IF THE COLLECTION FIRST EXIST IN THE DB. IF NOT DB.CREATECOLLECTION]
                 db.listCollections().toArray(function(err, items){
