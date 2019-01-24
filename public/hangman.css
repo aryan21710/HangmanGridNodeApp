@@ -189,7 +189,6 @@ body {
     height : 80px;
     border-radius: 20px;
     display: flex;
-    border: 1px solid red;
     justify-content: center;
     
 }
