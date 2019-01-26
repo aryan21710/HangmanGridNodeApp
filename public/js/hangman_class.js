@@ -240,7 +240,7 @@ class HangmanClass {
         console.log('moviename:-'+this.movieName);
         document.querySelector('#PrintStatusCont div').innerHTML='';
         document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
-        let rightOptionMsg=['KYA BAAT HAI','SUPER MACHA','KEEP GOING','YAK NUMBER','PHAAD','GAMER ON FIRE'];
+        let rightOptionMsg=['KYA BAAT HAI','SUPER MACHA','KEEP GOING','EK NUMBER','TUSSI CHA GAYE','GAMER ON FIRE', 'TUMBA CHENNAGIDE','KHUB BHALO', 'BAHU SARAS'];
         const AnimationArea=document.getElementById('AnimationArea');
         AnimationArea.innerHTML='<canvas id="myCanvas" width= "280" height = "580"> </canvas>'
         this.animation(null);
