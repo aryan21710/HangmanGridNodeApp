@@ -142,6 +142,8 @@ class HangmanClass {
             console.log('NO OF CHANCES ARE EXHAUSTED..CALLING printMessage AFTER THIS');
             HangmanClass.printWinMessage('lose');
             document.getElementById('mydiv').style.font='2em bold';
+            document.getElementById('mydiv').style.fontFamily='ZCOOL KuaiLe, cursive';
+            
             document.getElementById('mydiv').innerHTML=this.movieName;
            
             document.getElementById('userInpTag').disabled=true;   
