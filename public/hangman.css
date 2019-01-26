@@ -164,7 +164,7 @@ body {
                         cursor: pointer;
                         text-decoration: none;
                         outline: none;
-                        color: white;                 
+                        color: white;     
                         /* box-shadow: none !important */
                     }
 
@@ -197,9 +197,9 @@ body {
     text-align: left;
     font: 1.5em bold;
     -webkit-animation-name: TopUserText; 
-    -webkit-animation-duration: 20s; 
+    -webkit-animation-duration: 10s; 
     animation-name: TopUserText;
-    animation-duration: 20s;
+    animation-duration: 10s;
     position: relative;
     animation-iteration-count: infinite;
     animation-direction: normal;
