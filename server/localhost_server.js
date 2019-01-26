@@ -35,16 +35,17 @@ io.on('connection',(socket)=>{
     let topScorers=[];
 
 
-    MongoClient.connect('mongodb://aryan:aryan21710@ds211625.mlab.com:11625/heroku_lpl7zt8z',{useNewUrlParser: true},(err,client)=>{
+    MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
 
         if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
-        let db=client.db('heroku_lpl7zt8z');
+        let db=client.db('HANGMAN');
         console.log('COLLECTING STATS OF ALL RECORDS NOW:-');
         db.collection('userScrPair').find({})
         .toArray().then((docs)=>{
             console.log(docs.length+':'+Array.isArray(docs));
             console.log('ALL RECORDS:-'+JSON.stringify(docs));
-
+       
+            let obj={};
             docs.forEach((v,ind)=>{
                 if(v.username!='' && v.latestScr > 0) {
                     obj[parseInt(v["latestScr"])]=v["username"];
@@ -112,10 +113,10 @@ io.on('connection',(socket)=>{
 
         socket.on('disconnect',()=>{
             console.log(`"${username}" DISCONNECTED AT "${d1.toTimeString()} ${d1.toDateString()}" `);
-            MongoClient.connect('mongodb://aryan:aryan21710@ds211625.mlab.com:11625/heroku_lpl7zt8z',{useNewUrlParser: true},(err,client)=>{
+            MongoClient.connect('mongodb://localhost:27017/',{useNewUrlParser: true},(err,client)=>{
 
                 if (err) return console.log('NOT ABLE TO CONNECT TO THE TODOAPP DB:-'+err)
-                let db=client.db('heroku_lpl7zt8z');
+                let db=client.db('HANGMAN');
 
                 //#KEYWORDS:- [CHECK IF THE COLLECTION FIRST EXIST IN THE DB. IF NOT DB.CREATECOLLECTION]
                 db.listCollections().toArray(function(err, items){

@@ -12,14 +12,14 @@ class HangmanClass {
         console.log('*********createTags is called***********');
         console.log('INSIDE STATIC:-'+movie);
         document.getElementById('userInpDiv').innerHTML='<input type="text" maxlength="1" id="userInpTag" \
-        style="  color: white;  \
+        style="color: white;  \
          text-align: center;" placeholder="ENTER TEXT HERE">'
 
         const inputTags=[];
         const wrongOptions=[];
         const wrongOptionsId=[];
         movie.split('').forEach((v,ind)=>{
-            v != ' ' ? inputTags.push(`<input id=${v.toUpperCase()} style="color: white; background-image: url('brick-black-wallpaper.jpg'); width: 30px; height: 30px; font-size: 1.5em; text-align: center;" maxlength="1">`) : inputTags.push('&nbsp&nbsp');
+            v != ' ' ? inputTags.push(`<input disabled id=${v.toUpperCase()} style="color: white; background-image: url('brick-black-wallpaper.jpg'); width: 30px; height: 30px; font-size: 1.5em; text-align: center;" maxlength="1">`) : inputTags.push('&nbsp&nbsp');
             v != ' ' ? wrongOptions.push(`<span id=${ind} style="margin-left: 20px; text-align: center; display: inline;"></span>`): '';
             v != ' ' ? wrongOptionsId.push(ind): '';
         })

@@ -12,6 +12,7 @@ const socket=io();
 });
 
 socket.on('topScorers',(topScorers)=>{
+    console.log('topScorers on client:-'+topScorers);
     document.getElementById('TopUserText').innerHTML='TOP SCORERS:-' + topScorers;
 })
 
