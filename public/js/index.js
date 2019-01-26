@@ -5,20 +5,20 @@ const socket=io();
 // COMPATIBLE WITH MOBILE BROWSER ON MOBILE PHONE. INSTEAD
 // USE NORMAL ES5 FUNCTION SYNTAX.
     socket.on('connect',()=> {
-    //console.log('CONNECTED TO SERVER');
+    console.log('CONNECTED TO SERVER');
     socket.on('disconnect',()=> {
-        //console.log('DISCONNECTED TO SERVER');
+        console.log('DISCONNECTED TO SERVER');
     });
 });
 
 socket.on('topScorers',(topScorers)=>{
-    //console.log('topScorers on client:-'+topScorers);
+    console.log('topScorers on client:-'+topScorers);
     document.getElementById('TopUserText').innerHTML='TOP SCORERS:-' + topScorers;
 })
 
 
 socket.on('sendMovieList',(obj)=>{
-    //console.log('sendMovielist received on client..:-'+obj.scr+':'+obj.movieName+':'+obj.movieName.length);
+    console.log('sendMovielist received on client..:-'+obj.scr+':'+obj.movieName+':'+obj.movieName.length);
     const hangman=new HangmanClass(obj.movieName,undefined,obj.scr,undefined);
     hangman.start();
     
@@ -41,9 +41,9 @@ function enterNameAnimation() {
 }
 
 function movieType(event) {
-    //console.log('inside movieType:-');
+    console.log('inside movieType:-');
     event.preventDefault();
-    //console.log(event.target.value);
+    console.log(event.target.value);
     socket.emit('movieType',event.target.value);
     setTimeout(()=>{
         document.getElementById('QuizArea').innerHTML='';
@@ -56,17 +56,17 @@ function movieType(event) {
 
 function userOptionsInit(event) {   
         const username=[];
-        //console.log('inside:-userOptionsInit:-');
+        console.log('inside:-userOptionsInit:-');
         event.preventDefault();
         document.getElementById('userInpTag').addEventListener('keypress',(event)=>{
-            //console.log('event.keyCode:-'+event.keyCode);
+            console.log('event.keyCode:-'+event.keyCode);
             event.keyCode==13? event.preventDefault() : "";
         })
-        //console.log(event.target.value);
+        console.log(event.target.value);
         username.push(event.target.value);
 
         username.forEach((v)=>{
-            //console.log('emitting:-'+v);
+            console.log('emitting:-'+v);
             socket.emit('userName',v);
         }); 
         document.querySelectorAll(".movieType").forEach((v)=>{
@@ -77,6 +77,6 @@ function userOptionsInit(event) {
 
 
 function clicked() {
-    //console.log('IN INDEX.JS. USER CLICKED START. EMITTING startBtnClicked NOW')
+    console.log('IN INDEX.JS. USER CLICKED START. EMITTING startBtnClicked NOW')
     socket.emit('startBtnClicked',true);
 }
