@@ -44,7 +44,7 @@ io.on('connection',(socket)=>{
         .toArray().then((docs)=>{
             console.log(docs.length+':'+Array.isArray(docs));
             console.log('ALL RECORDS:-'+JSON.stringify(docs));
-
+            let obj={};
             docs.forEach((v,ind)=>{
                 if(v.username!='' && v.latestScr > 0) {
                     obj[parseInt(v["latestScr"])]=v["username"];
