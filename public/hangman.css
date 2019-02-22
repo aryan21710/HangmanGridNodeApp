@@ -33,7 +33,6 @@ body {
         grid-template-rows: 2.3fr 3.7fr 1fr;
         grid-template-columns: 0.9fr 0.9fr;
         grid-gap: 20px;
-
     }
 
 
@@ -58,8 +57,6 @@ body {
                 border-radius: 20px;
                 display: flex;
                 flex-direction: column;
-
-       
             }
 
                     #ScoreCont > div {
@@ -67,7 +64,6 @@ body {
                         font-size: 1.5em;
                         font-weight: bold;
                         text-align: center;
-
                     }
 
 
@@ -117,8 +113,7 @@ body {
                         justify-content: center;
                         width: 100%;
                         align-items: center;
-
-
+                        justify-content: center;
                     }
 
                             #userInpTag {

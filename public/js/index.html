@@ -4,6 +4,7 @@
     <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="hangman.css">
     <meta name="viewport" content="initial-scale=0.5,user-scalable=no">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 </head>
 <body>
     <div id='MainContainer'>
@@ -25,7 +26,7 @@
                 <div id="QuizArea">           
 
                         <div id='btnArea' >
-                                <button  type="button" style="color: grey" class="movieType"  disabled name='bollywood' value='bollywood' onclick='movieType(event)'>BOLLYWOOD</button> <button  type="button" style="color: grey" class="movieType" disabled name='hollywood' value='hollywood' onclick='movieType(event)'>HOLLYWOOD</button> 
+                                <button  type="button" style="color: grey" class="movieType" id="bollywood"  disabled name='bollywood' value='bollywood' onclick='movieType(event)'>BOLLYWOOD</button> <button  type="button" style="color: grey" id="hollywood" class="movieType" disabled name='hollywood' value='hollywood' onclick='movieType(event)'>HOLLYWOOD</button> 
   
                         </div>
 
@@ -47,7 +48,6 @@
     </div>
   
 
-<script src="socket.io/socket.io.js"></script>
 <script src='../js/hangman_class.js'></script>
 <script src="../js/index.js"></script>
 
