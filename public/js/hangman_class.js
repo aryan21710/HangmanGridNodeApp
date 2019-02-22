@@ -9,7 +9,7 @@ class HangmanClass {
     }
   
     static removeFoundLetter(dupmovieVar,letter) {
-        console.log('***********removeFoundLetter is called***********');
+        // console.log('***********removeFoundLetter is called***********');
 
 // 32] USING dupmovieVar Array(movieName) look for alphabet entered by user in it. MAKE A NEW ARRAY
 // called newmovie AFTER REMOVING THE MATCHED LETTER(alphabet entered by user) FROM THE MOVIENAME FOR FURTHER SEARCH.
@@ -19,7 +19,7 @@ class HangmanClass {
             dupmovieVar[i]!=letter ? newmovie.push(dupmovieVar[i]) : ''
         }
         newmovie=newmovie.join('');
-        console.log(`after removing ${letter} the new movie name is ${newmovie}`);
+        // console.log(`after removing ${letter} the new movie name is ${newmovie}`);
 // 33] RETURN THE NEW ARRAY 'newmovie' WITH ANYMORE UNMATCHED LETTERS IN IT. 
         return newmovie;        
     }
@@ -41,7 +41,7 @@ class HangmanClass {
     static soundEffects(type) {
         document.getElementById('audio').src='';
         if (type=='wrong') {
-            console.log('PLAY WRONG OPTION SOUND NOW');
+            // console.log('PLAY WRONG OPTION SOUND NOW');
             document.getElementById('audio').src='Pain.mp3';    
         } else if (type=='kill') {
             document.getElementById('audio').src='Scary Scream.mp3';    
@@ -53,7 +53,7 @@ class HangmanClass {
     }
 
     static printWinMessage(status) { 
-        console.log('status inside printWinMessage:-'+status);
+        // console.log('status inside printWinMessage:-'+status);
 
         // console.log('intial fontsize:-'+document.getElementById('PrintStatusCont').style.fontSize);
 // 44] IF status ARGUMENT PASSED TO printWinMessage IS win or lose THEN CHANGE THE FONT SIZE OF
@@ -61,23 +61,23 @@ class HangmanClass {
         if (status=='win' || status=='lose') {
             document.querySelector('#PrintStatusCont div').style.fontSize='0.3em';
             this.printMessage=()=> {
-                console.log('printWinMessage is called now..');
+                // console.log('printWinMessage is called now..');
                 let font=document.querySelector('#PrintStatusCont div').style.fontSize;
                 font=parseFloat(font.slice(0,font.length-2));
-                console.log('font size:-'+font);
-                console.log('status:-'+status);
+                // console.log('font size:-'+font);
+                // console.log('status:-'+status);
                 if (font <= 1.5) {
-                    console.log('in if block of printWinMessage');
+                    // console.log('in if block of printWinMessage');
                     font+=0.3;
                     document.querySelector('#PrintStatusCont div').style.fontSize=font+'em';
-                    console.log('new font size:-'+document.querySelector('#PrintStatusCont div').style.fontSize);
-                    console.log('before:-'+document.querySelector('#PrintStatusCont div').innerHTML);
+                    // console.log('new font size:-'+document.querySelector('#PrintStatusCont div').style.fontSize);
+                    // console.log('before:-'+document.querySelector('#PrintStatusCont div').innerHTML);
                     status=='lose'? document.querySelector('#PrintStatusCont div').innerHTML="YOU LOST.." :
                     document.querySelector('#PrintStatusCont div').innerHTML="YOU WON..";
-                    console.log('after:-'+document.querySelector('#PrintStatusCont div').innerHTML);
+                    // console.log('after:-'+document.querySelector('#PrintStatusCont div').innerHTML);
                 } else {
 // 46] SEND THE WIN LOSE GAME STATUS TO SERVER USING EMTI EVENT.
-                    console.log('in else block of printWinMessage');
+                    // console.log('in else block of printWinMessage');
                     socket.emit('gameStatus',{
                         scr: status,
                     })
@@ -96,14 +96,14 @@ class HangmanClass {
     }
 
      checkResult(result,movie,animationCount) {
-        console.log('***********checkresult is called***********');
-        console.log('animationCount:-'+animationCount);
+        // console.log('***********checkresult is called***********');
+        // console.log('animationCount:-'+animationCount);
 //41] LETTERS ENTERED BY USER IS STORED IN RESULT IS CONVERTED INTO UPPERCASE LETTERS
         result=result.toUpperCase();
         movie=movie.split(' ').join('').toUpperCase();
-        console.log(result+':'+movie);
+        // console.log(result+':'+movie);
       
-        console.log('CURRENT SCORE:-'+this.score);
+        // console.log('CURRENT SCORE:-'+this.score);
 // 42] TO DECIDE WHETHER USER WON a] animationCount IS GREATER THAN 0.AND LENGTH OF MOVIENAME IS SAME AS RESULT (WHICH 
 // CONTAINS ALL THE LETTERS ENTERED BY USER). ONE BY ONE EVERY ELEMENT INSIDE RESULT STRING IS MATCHED WITH
 // MOVIENAME IF ONE OF IT DOESNT MATCH, USER LOSES. IF ALL OF THEM MATCHES USER WINS.
@@ -112,7 +112,7 @@ class HangmanClass {
             if (result.length===movie.length) {
                 for(let i=0;i < result.length; i++) {
                     if(!movie.includes(result[i])) { 
-                        console.log(`${result[i]} didnt match. User will Play next Move`);                
+                        // console.log(`${result[i]} didnt match. User will Play next Move`);                
                     }
                 }
 // 43] IF ALL MATCHES CALL function 'printWinMessage'. CALL THE RIGHT SOUND EFFECTS ACCORDINLY
@@ -135,7 +135,7 @@ class HangmanClass {
         } else {
 // 53] IF ALL CONDITION IN 42 STEP FAILS, KILL THE USER.
             HangmanClass.soundEffects('kill');
-            console.log('NO OF CHANCES ARE EXHAUSTED...CALLING printMessage AFTER THIS');
+            // console.log('NO OF CHANCES ARE EXHAUSTED...CALLING printMessage AFTER THIS');
 // 54] CALL function 'printWinMessage' WITH STATUS LOSE AND WITH THE UNCHANGED SCORE.
             HangmanClass.printWinMessage('lose');
             document.getElementById('mydiv').style.font='2em bold';
@@ -154,15 +154,15 @@ class HangmanClass {
             setTimeout(()=>{
                 document.querySelector('span').innerHTML=this.score;
             }, 1000);
-            console.log('CHANGED SCORE:-'+this.score);
+            // console.log('CHANGED SCORE:-'+this.score);
            
         }
     }
 
     animation(shape=this.shape,whichShape=this.shapeArr.length) {
-        console.log('*********animation is called*********');
+        // console.log('*********animation is called*********');
         let myCanvas=document.getElementById('myCanvas');
-        console.log('shape now:-'+shape+' WHICHSHAPE:-'+whichShape+' ..mycanvas id:-'+ myCanvas);
+        // console.log('shape now:-'+shape+' WHICHSHAPE:-'+whichShape+' ..mycanvas id:-'+ myCanvas);
 
         if(myCanvas) {
                 let ctx = myCanvas.getContext("2d");
@@ -183,24 +183,24 @@ class HangmanClass {
                         ctx.fillStyle = "black";
                         ctx.fill();
                         ctx.stroke();
-                        console.log('HEAD');
+                        // console.log('HEAD');
                 } else if(shape=='Body') {
                             ctx.moveTo(50,90);
                             ctx.lineTo(50,400);
                             ctx.stroke();
-                            console.log('BODY');
+                            // console.log('BODY');
                 } else if (shape=='LeftLeg') {
                             ctx.moveTo(50,400);
                             ctx.lineTo(10,500);
                             ctx.stroke();
-                            console.log('LEFT LEG');
+                            // console.log('LEFT LEG');
                 } else if (shape=='RightLeg'){
                             ctx.moveTo(50,400);
                             ctx.lineTo(90,500);
                             ctx.stroke();
-                            console.log('RIGHT LEG');
+                            // console.log('RIGHT LEG');
                 } else if (shape=='LeftHand') {
-                            console.log('BOTH HANDS NOW');
+                            // console.log('BOTH HANDS NOW');
                             ctx.moveTo(50,350);
                             ctx.lineTo(0,350);
                             ctx.stroke();
@@ -209,7 +209,7 @@ class HangmanClass {
                             ctx.lineTo(100,350);
                             ctx.stroke();
                 } else if (shape=='Kill') {
-                            console.log('KILLING NOW');
+                            // console.log('KILLING NOW');
                             ctx.beginPath();
                             ctx.clearRect(0, 130, 100, 200);
                             ctx.closePath();
@@ -225,7 +225,7 @@ class HangmanClass {
                 }
         
         } else {
-                console.log('myCanvas element inside AnimationArea missing');
+                // console.log('myCanvas element inside AnimationArea missing');
         }
     }
 
@@ -233,18 +233,15 @@ class HangmanClass {
     
      start() {
 
-        console.log('***************** NEW GAME **********************');
+        // console.log('***************** NEW GAME **********************');
 
 // 16] FETCHING ONE RANDOM MOVIE FROM THE MOVIENAME VARIABLE WHICH CONTAINS NAME OF ALL MOVIES.
 
         this.movieName=this.movieArr[Math.floor(Math.random()*this.movieArr.length-1)].trim();
-        console.log('movieName:-'+this.movieName+':'+this.movieName.length); 
 
 //17] shapeArr IS INSTANTIATED WHICH CONTAINS WHICH HANGMAN ANIMATION TO CALL WHEN USER MISSES A MOVE.
 
         this.shapeArr=['Head','Body','LeftLeg','RightLeg','LeftHand','Kill'];
-        console.log('this.shapeArr:-'+this.shapeArr);
-        console.log('moviename:-'+this.movieName);
 
 // 17] MAKING THE CONTENTS OF '#PrintStatusCont div' TO NULL FROM HANGMAN CHALLENGE AS SET IN INDEX.JS EARLIER.
         document.querySelector('#PrintStatusCont div').innerHTML='';
@@ -310,8 +307,8 @@ class HangmanClass {
 
         let keyDwnFunc=((e)=>{
                 e.target.value=e.target.value.toUpperCase();
-                console.log('entered :-'+e.target.value);
-        // 28] alphabet entered by user is stored and made an ID with the same alphabet name. eg:-#A, #X.
+
+                // 28] alphabet entered by user is stored and made an ID with the same alphabet name. eg:-#A, #X.
                 let idName='#'+e.target.value;
 
         // 29] dupMovieVar is duplicate value of this.moviename to preserve this.movieName for comparision purposes.
@@ -333,7 +330,7 @@ class HangmanClass {
                     dupmovieVar=HangmanClass.removeFoundLetter(dupmovieVar,e.target.value);
 //34] SINCE ITS MATCH AS PER STEP 30, DISPLAY ONE OF THE RANDOM TEXT FROM ARRAY rightOptionMsg inside
 // '#PrintStatusCont div'
-                    console.log('rightOptionMsg1.:-'+ rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)]);
+                    // console.log('rightOptionMsg1.:-'+ rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)]);
                     document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
                     document.querySelector('#PrintStatusCont div').innerHTML= rightOptionMsg[Math.floor(Math.random()*rightOptionMsg.length)];
 

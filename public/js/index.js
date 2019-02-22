@@ -8,10 +8,10 @@ const socket=io();
 // 1b] LET THE CLIENT CONNECT TO THE SERVER USING SOCKET connect METHOD. AND ONCE THE CLIENT IS
 // CONNECTED AND WEBPAGE IS READY ON THE LANDING PAGE DISPLAY HANGMAN CHALLENGE IN THE #PrintStatusCont div
     socket.on('connect',()=> {
-    console.log('CONNECTED TO SERVER');
+    // console.log('CONNECTED TO SERVER');
     document.querySelector('#PrintStatusCont div').innerHTML='THE HANGMAN CHALLENGE'
     socket.on('disconnect',()=> {
-        console.log('DISCONNECTED TO SERVER');
+        // console.log('DISCONNECTED TO SERVER');
     });
 });
 
@@ -19,7 +19,7 @@ const socket=io();
 
 
 socket.on('topScorers',(topScorers)=>{
-    console.log('topScorers on client:-'+topScorers);
+    // console.log('topScorers on client:-'+topScorers);
 // 9] THE TOPSCORER STRING WILL BE DISPLAYED INSIDE THE DIV 'TopUserText' NOW.
     document.getElementById('TopUserText').innerHTML='TOP SCORERS:-' + topScorers;
 })
@@ -49,18 +49,18 @@ let enterNameAnimation=(function() {
 // VALUE OF 'username'
 function userOptionsInit(event) {   
     const username=[];
-    console.log('inside:-userOptionsInit:-');
+    // console.log('inside:-userOptionsInit:-');
     event.preventDefault();
     document.getElementById('userInpTag').addEventListener('keypress',(event)=>{
-        console.log('event.keyCode:-'+event.keyCode);
+        // console.log('event.keyCode:-'+event.keyCode);
         event.keyCode==13? event.preventDefault() : "";
     })
-    console.log(event.target.value);
+    // console.log(event.target.value);
     username.push(event.target.value);
 
 // 4] THE ENTERED USERNAME WILL BE EMITTED BY CLIENT TO SERVER.
     username.forEach((v)=>{
-        console.log('emitting:-'+v);
+        // console.log('emitting:-'+v);
         socket.emit('userName',v);
     }); 
 
@@ -79,7 +79,7 @@ function userOptionsInit(event) {
 
 // 6] movieOptionAnimation FUNCTION CODE EXECUTED.
 function movieOptionAnimation() {
-    console.log('INSIDE movieOptionAnimation FUNCTION INSIDE INDEX.JS');
+    // console.log('INSIDE movieOptionAnimation FUNCTION INSIDE INDEX.JS');
     let cnt=0;
     
         
@@ -109,9 +109,9 @@ function movieOptionAnimation() {
 // 7] THE MOVIETYPE CLICKED AND SELECTED BY USER IS EMITTED TO SERVER BY CLIENT. AND START BUTTON TO
 // PLAY THE GAME IS ENABLED FOR USER.
 function movieType(event) {
-    console.log('inside movieType:-');
+    // console.log('inside movieType:-');
     event.preventDefault();
-    console.log(event.target.value);
+    // console.log(event.target.value);
     socket.emit('movieType',event.target.value);
     setTimeout(()=>{
         document.getElementById('QuizArea').innerHTML='';
@@ -125,7 +125,7 @@ function movieType(event) {
 
 // 8] THE FUNCTION CLICK START ANIMATION IS STARTED AFTER MOVIETYPE IS SELECTED BY USER.
 function clickStartAnimation() {
-    console.log('INSIDE clickStartAnimation FUNCTION INSIDE INDEX.JS');
+    // console.log('INSIDE clickStartAnimation FUNCTION INSIDE INDEX.JS');
     let cnt=0;
     document.querySelector('#PrintStatusCont div').style.fontSize='1.5em';
     document.querySelector('#PrintStatusCont div').innerHTML='CLICK START';
@@ -154,7 +154,6 @@ function clickStartAnimation() {
 socket.on('sendMovieList',(obj)=>{
 // 12] THE OBJ RECEIVED CONTAINS INTIAL SCORE WHICH 0, LIST OF ALL THE MOVIES AND NO OF MOVIES SENT BY USER.
 
-    console.log('sendMovielist received on client..:-'+obj.scr+':'+obj.movieName+':'+obj.movieName.length);
 // 13] AN OBJECT 'hangman' IS MADE OUT OF 'HangmanClass' WITH VARIABLES PASSED AS INTIAL SCORE WHICH 0, LIST OF ALL THE MOVIES 
 // AND NO OF MOVIES SENT BY USER
     const hangman=new HangmanClass(obj.movieName,undefined,obj.scr,undefined);
@@ -169,6 +168,6 @@ socket.on('sendMovieList',(obj)=>{
 
 
 function clicked() {
-    console.log('IN INDEX.JS. USER CLICKED START. EMITTING startBtnClicked NOW')
+    // console.log('IN INDEX.JS. USER CLICKED START. EMITTING startBtnClicked NOW')
     socket.emit('startBtnClicked',true);
 }
